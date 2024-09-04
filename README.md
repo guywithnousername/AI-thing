@@ -13,3 +13,4 @@ For example, if the list says to install `pandas`, do `pip install pandas`.
 ## List of modules installed
 * `pandas`
 * `numpy`
+* `datetime`
