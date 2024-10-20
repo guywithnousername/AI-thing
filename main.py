@@ -1,29 +1,20 @@
-import pandas as pd
-import numpy as np
-from sklearn.tree import DecisionTreeRegressor
-from sklearn import preprocessing
+import torch
+from torch import nn
+from torch.utils.data import DataLoader
+from torchvision import datasets
+from torchvision.transforms import ToTensor
 
-loan_file_path = "loan.csv"
-loan_data = pd.read_csv(loan_file_path)
-# loan_data['gender'] = loan_data['gender'].astype(str)
-# loan_data['occupation'] = loan_data['occupation'].astype(str)
-# loan_data['education_level'] = loan_data['education_level'].astype(str)
-# loan_data['marital_status'] = loan_data['marital_status'].astype(str)
 
-y = loan_data.loan_status
+training_data = datasets.FashionMNIST(
+    root="data",
+    train=True,
+    download=True,
+    transform=ToTensor(),
+)
 
-features = ['age', 'gender', 'occupation', 'education_level', 'marital_status', 'income', 'credit_score']
-X = loan_data[features]
-
-le = preprocessing.LabelEncoder()
-for i in features:
-    loan_data[i] = le.fit_transform(loan_data[i])
-
-loan_model = DecisionTreeRegressor(random_state = 1)
-
-print("Starting to train model")
-loan_model.fit(X, y)
-for a in X:
-    print("Predicting: ")
-    print(a)
-    print(loan_model.predict(a))
+test_data = datasets.FashionMNIST(
+    root="data",
+    train=False,
+    download=True,
+    transform=ToTensor(),
+)
